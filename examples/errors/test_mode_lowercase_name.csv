@@ -1,0 +1,8 @@
+parameter,value
+package_name,abc
+repository,examples/test_repo.txt
+repo_mode,test
+package_version,1.0.210
+output_image,graph.svg
+ascii_tree,true
+max_depth,3

@@ -1,0 +1,8 @@
+parameter,value
+package_name,serde
+repository,https://github.com/serde-rs/serde
+repo_mode,remote
+package_version,1.0.210
+output_image,graph.png
+ascii_tree,true
+max_depth,3
