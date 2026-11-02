@@ -92,22 +92,23 @@ class FileErrorTests(TempDirTestCase):
         self.assert_error(path, "параметр 'repo_mode' не задан")
 
 
+BAD_VALUES = {
+    "package_name": ["", "1serde", "se rde", "a" * 65],
+    "repository": ["github", "ftp://host/x", "https://", "http://a b"],
+    "repo_mode": ["local", "REMOTEX"],
+    "package_version": ["1.0", "01.0.0", "v1.0.0", "1.0.0."],
+    "output_image": ["graph.png", ".svg", "dir/none/g.svg", "a?.svg"],
+    "ascii_tree": ["maybe", "2"],
+    "max_depth": ["-1", "0", "3.5", "abc", "101"],
+}
+
+
 class ValueErrorTests(TempDirTestCase):
     """Ошибки в значениях каждого параметра."""
 
-    BAD_VALUES = {
-        "package_name": ["", "1serde", "se rde", "a" * 65],
-        "repository": ["github", "ftp://host/x", "https://", "http://a b"],
-        "repo_mode": ["local", "REMOTEX"],
-        "package_version": ["1.0", "01.0.0", "v1.0.0", "1.0.0."],
-        "output_image": ["graph.png", ".svg", "dir/none/g.svg", "a?.svg"],
-        "ascii_tree": ["maybe", "2"],
-        "max_depth": ["-1", "0", "3.5", "abc", "101"],
-    }
-
     def test_bad_values(self):
         """Каждое неверное значение приводит к ошибке своего параметра."""
-        for key, values in self.BAD_VALUES.items():
+        for key, values in BAD_VALUES.items():
             for value in values:
                 with self.subTest(key=key, value=value):
                     path = self.write_config({key: value})

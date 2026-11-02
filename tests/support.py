@@ -18,11 +18,13 @@ REMOTE_VALUES = {
 class TempDirTestCase(unittest.TestCase):
     """Базовый класс: создаёт временный каталог для файлов теста."""
 
-    def setUp(self):
-        """Создаёт каталог и регистрирует его удаление."""
-        holder = tempfile.TemporaryDirectory()
-        self.addCleanup(holder.cleanup)
-        self.directory = holder.name
+    @property
+    def directory(self):
+        """Возвращает временный каталог, создавая его при первом обращении."""
+        if not hasattr(self, "_holder"):
+            self._holder = tempfile.TemporaryDirectory()
+            self.addCleanup(self._holder.cleanup)
+        return self._holder.name
 
     def path(self, name):
         """Возвращает полный путь к файлу во временном каталоге."""
